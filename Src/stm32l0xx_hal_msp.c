@@ -70,37 +70,41 @@
   */
 void HAL_SPI_MspInit(SPI_HandleTypeDef *hspi)
 {
+	
+	
   GPIO_InitTypeDef  GPIO_InitStruct;
   
-  /*##-1- Enable peripherals and GPIO Clocks #################################*/
-  /* Enable GPIO TX/RX clock */
+  //##-1- Enable peripherals and GPIO Clocks #################################
+  // Enable GPIO TX/RX clock 
   SPIx_SCK_GPIO_CLK_ENABLE();
   SPIx_MISO_GPIO_CLK_ENABLE();
   SPIx_MOSI_GPIO_CLK_ENABLE();
-  /* Enable SPI clock */
+  // Enable SPI clock 
   SPIx_CLK_ENABLE(); 
   
-  /*##-2- Configure peripheral GPIO ##########################################*/  
-  /* SPI SCK GPIO pin configuration  */
+  //##-2- Configure peripheral GPIO ##########################################
+  // SPI SCK GPIO pin configuration 
   GPIO_InitStruct.Pin       = SPIx_SCK_PIN;
   GPIO_InitStruct.Mode      = GPIO_MODE_AF_PP;
   GPIO_InitStruct.Pull      = GPIO_PULLUP;
   GPIO_InitStruct.Speed     = GPIO_SPEED_FREQ_HIGH  ;
   GPIO_InitStruct.Alternate = SPIx_SCK_AF;
   
-  HAL_GPIO_Init(SPIx_SCK_GPIO_PORT, &GPIO_InitStruct);
+  HAL_GPIO_Init(SPIx_SCK_GPIO_PORT, &GPIO_InitStruct);  //arek here is problem
     
-  /* SPI MISO GPIO pin configuration  */
+  // SPI MISO GPIO pin configuration  
   GPIO_InitStruct.Pin = SPIx_MISO_PIN;
   GPIO_InitStruct.Alternate = SPIx_MISO_AF;
   
   HAL_GPIO_Init(SPIx_MISO_GPIO_PORT, &GPIO_InitStruct);
   
-  /* SPI MOSI GPIO pin configuration  */
+  // SPI MOSI GPIO pin configuration  
   GPIO_InitStruct.Pin = SPIx_MOSI_PIN;
   GPIO_InitStruct.Alternate = SPIx_MOSI_AF;
     
   HAL_GPIO_Init(SPIx_MOSI_GPIO_PORT, &GPIO_InitStruct);    
+	
+	
 }
 
 /**

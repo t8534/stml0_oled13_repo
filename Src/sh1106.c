@@ -485,11 +485,13 @@ void SH1106_begin()
     SPI.setClockDivider(SPI_CLOCK_DIV128);
     */
 
+
     MCAL_SPI_Init(); //todo: what about deinit ?	
     HAL_Delay(10);
+	
     MCAL_GPIO_Init(); //todo: what about deinit ?	
     HAL_Delay(10);
-	
+
 	  //arek add, set CS high to init interface
     digitalWrite(OLED_CS, HIGH);  // LOW - data can be send, HIGH - interface init
     HAL_Delay(100);  // arek: add because stm is quicker than atmega
@@ -530,6 +532,7 @@ void SH1106_begin()
     command(0xA4);// Disable Entire Display On (0xa4/0xa5)
     command(0xA6);// Disable Inverse Display On (0xa6/a7) 
     command(0xAF);//--turn on oled panel
+
 }
 
 void SH1106_clear(uint8_t* buffer)

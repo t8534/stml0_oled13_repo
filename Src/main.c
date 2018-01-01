@@ -423,6 +423,7 @@ int main(void)
 	// OLED tests - begin
   /////////////////////////////////////////////////////////////////////////////	
 
+  // Current test
 	
 	//todo move to better place
   uint8_t oled_buf[WIDTH * HEIGHT / 8];
@@ -430,12 +431,13 @@ int main(void)
   // display an image of bitmap matrix
   SH1106_begin();
 	
+	/*
   SH1106_clear(oled_buf);
   SH1106_bitmap(0, 0, Waveshare12864, 128, 64, oled_buf);
   SH1106_display(oled_buf);
 	HAL_Delay(2000);
   SH1106_clear(oled_buf);
-  
+  */
 
 /*
   // display images of bitmap matrix

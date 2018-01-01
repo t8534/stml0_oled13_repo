@@ -35,12 +35,13 @@ SPI_HandleTypeDef SpiHandle;
 //   or 888,888 bytes per second (excluding overhead like setting SS low and so on).
 void MCAL_SPI_Init()
 {
+	
   HAL_StatusTypeDef res = HAL_ERROR;
 	
 	// Data sheed of display shows it should be mode 3 - Clock IDLE = High and Data 
 	// acquired on the rising edge.
-  /*##-1- Configure the SPI peripheral #######################################*/
-  /* Set the SPI parameters */
+  // ##-1- Configure the SPI peripheral #######################################
+  // Set the SPI parameters 
   SpiHandle.Instance               = SPIx;  //SPI2;  // todo: which SPI ?
   
   SpiHandle.Init.BaudRatePrescaler = SPI_BAUDRATEPRESCALER_256;  //todo most slow, check others 
@@ -70,6 +71,7 @@ void MCAL_SPI_Init()
   {
 		//FaultHandler(res);  //todo
   }
+
 	
 }
 

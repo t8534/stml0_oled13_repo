@@ -235,13 +235,13 @@ static HAL_StatusTypeDef SPI_WaitOnFlagUntilTimeout(SPI_HandleTypeDef *hspi, uin
   */
 HAL_StatusTypeDef HAL_SPI_Init(SPI_HandleTypeDef *hspi)
 {
-  /* Check the SPI handle allocation */
+  // Check the SPI handle allocation 
   if(hspi == NULL)
   {
     return HAL_ERROR;
   }
 
-  /* Check the parameters */
+  // Check the parameters 
   assert_param(IS_SPI_ALL_INSTANCE(hspi->Instance));
   assert_param(IS_SPI_MODE(hspi->Init.Mode));
   assert_param(IS_SPI_DIRECTION_MODE(hspi->Init.Direction));
@@ -257,40 +257,40 @@ HAL_StatusTypeDef HAL_SPI_Init(SPI_HandleTypeDef *hspi)
 
   if(hspi->State == HAL_SPI_STATE_RESET)
   {
-    /* Allocate lock resource and initialize it */
+    // Allocate lock resource and initialize it 
     hspi->Lock = HAL_UNLOCKED;
 
-    /* Init the low level hardware : GPIO, CLOCK, NVIC... */
+    // Init the low level hardware : GPIO, CLOCK, NVIC... 
     HAL_SPI_MspInit(hspi);
   }
-  
+/* arek 
   hspi->State = HAL_SPI_STATE_BUSY;
 
-  /* Disble the selected SPI peripheral */
+  // Disble the selected SPI peripheral 
   __HAL_SPI_DISABLE(hspi);
 
-  /*----------------------- SPIx CR1 & CR2 Configuration ---------------------*/
-  /* Configure : SPI Mode, Communication Mode, Data size, Clock polarity and phase, NSS management,
-  Communication speed, First bit and CRC calculation state */
+  //----------------------- SPIx CR1 & CR2 Configuration ---------------------
+  // Configure : SPI Mode, Communication Mode, Data size, Clock polarity and phase, NSS management,
+  // Communication speed, First bit and CRC calculation state 
   WRITE_REG(hspi->Instance->CR1, (hspi->Init.Mode | hspi->Init.Direction | hspi->Init.DataSize |
                                   hspi->Init.CLKPolarity | hspi->Init.CLKPhase | (hspi->Init.NSS & SPI_CR1_SSM) |
                                   hspi->Init.BaudRatePrescaler | hspi->Init.FirstBit  | hspi->Init.CRCCalculation) );
 
-  /* Configure : NSS management */
+  // Configure : NSS management 
   WRITE_REG(hspi->Instance->CR2, (((hspi->Init.NSS >> 16U) & SPI_CR2_SSOE) | hspi->Init.TIMode));
 
-  /*---------------------------- SPIx CRCPOLY Configuration ------------------*/
-  /* Configure : CRC Polynomial */
+  //---------------------------- SPIx CRCPOLY Configuration ------------------
+  // Configure : CRC Polynomial 
   WRITE_REG(hspi->Instance->CRCPR, hspi->Init.CRCPolynomial);
   
 #if !defined(STM32L011xx) && !defined(STM32L021xx) && !defined(STM32L031xx) && !defined(STM32L041xx)
-  /* Activate the SPI mode (Make sure that I2SMOD bit in I2SCFGR register is reset) */
+  // Activate the SPI mode (Make sure that I2SMOD bit in I2SCFGR register is reset) 
   CLEAR_BIT(hspi->Instance->I2SCFGR, SPI_I2SCFGR_I2SMOD);
 #endif
   
   hspi->ErrorCode = HAL_SPI_ERROR_NONE;
   hspi->State = HAL_SPI_STATE_READY;
-  
+*/  
   return HAL_OK;
 }
 
@@ -325,21 +325,25 @@ HAL_StatusTypeDef HAL_SPI_DeInit(SPI_HandleTypeDef *hspi)
   return HAL_OK;
 }
 
-/**
+/** 
   * @brief SPI MSP Init
   * @param  hspi: pointer to a SPI_HandleTypeDef structure that contains
   *               the configuration information for SPI module.
   * @retval None
   */
+// arek: here is a problem because HAL_SPI_MspInit() is defined in stm32l0xx)hal_msp.c
+//arek: commented
+/*
  __weak void HAL_SPI_MspInit(SPI_HandleTypeDef *hspi)
  {
-  /* Prevent unused argument(s) compilation warning */
+  // Prevent unused argument(s) compilation warning 
   UNUSED(hspi);
 
-  /* NOTE : This function Should not be modified, when the callback is needed,
-             the HAL_SPI_MspInit could be implenetd in the user file
-  */
+  // NOTE : This function Should not be modified, when the callback is needed,
+  //           the HAL_SPI_MspInit could be implenetd in the user file
+  //
 }
+*/
 
 /**
   * @brief SPI MSP DeInit

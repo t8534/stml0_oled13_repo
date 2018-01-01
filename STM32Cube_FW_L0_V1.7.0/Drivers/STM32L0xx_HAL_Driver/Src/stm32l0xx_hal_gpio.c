@@ -182,74 +182,78 @@
   *                    the configuration information for the specified GPIO peripheral.
   * @retval None
   */
+//arek here is problem	
 void HAL_GPIO_Init(GPIO_TypeDef  *GPIOx, GPIO_InitTypeDef *GPIO_Init)
 {
+	
+
   uint32_t position = 0x00U;
   uint32_t iocurrent = 0x00U;
   uint32_t temp = 0x00U;
  
-  /* Check the parameters */
+
+  // Check the parameters 
   assert_param(IS_GPIO_MODE(GPIO_Init->Mode));
   assert_param(IS_GPIO_PULL(GPIO_Init->Pull));
   assert_param(IS_GPIO_PIN_AVAILABLE(GPIOx,(GPIO_Init->Pin)));
 
-  /* Configure the port pins */
+  // Configure the port pins 
   while ((GPIO_Init->Pin) >> position)
   {
-    /* Get the IO position */
+    // Get the IO position 
     iocurrent = (GPIO_Init->Pin) & (1U << position);
     
     if(iocurrent)
     {
-      /*--------------------- GPIO Mode Configuration ------------------------*/
-      /* In case of Alternate function mode selection */
+      //--------------------- GPIO Mode Configuration ------------------------
+      // In case of Alternate function mode selection 
       if((GPIO_Init->Mode == GPIO_MODE_AF_PP) || (GPIO_Init->Mode == GPIO_MODE_AF_OD)) 
       {
-        /* Check if the Alternate function is compliant with the GPIO in use */
+        // Check if the Alternate function is compliant with the GPIO in use 
         assert_param(IS_GPIO_AF_AVAILABLE(GPIOx,(GPIO_Init->Alternate)));
-        /* Configure Alternate function mapped with the current IO */ 
+        // Configure Alternate function mapped with the current IO 
         temp = GPIOx->AFR[position >> 3U];
         temp &= ~((uint32_t)0xFU << ((uint32_t)(position & (uint32_t)0x07U) * 4U)) ;
         temp |= ((uint32_t)(GPIO_Init->Alternate) << (((uint32_t)position & (uint32_t)0x07U) * 4U)) ;
         GPIOx->AFR[position >> 3U] = temp;
       } 
 
-      /* In case of Output or Alternate function mode selection */
+      // In case of Output or Alternate function mode selection 
       if((GPIO_Init->Mode == GPIO_MODE_OUTPUT_PP) || (GPIO_Init->Mode == GPIO_MODE_AF_PP) ||
          (GPIO_Init->Mode == GPIO_MODE_OUTPUT_OD) || (GPIO_Init->Mode == GPIO_MODE_AF_OD))
       {
-        /* Check the Speed parameter */
+        // Check the Speed parameter 
         assert_param(IS_GPIO_SPEED(GPIO_Init->Speed));
-        /* Configure the IO Speed */
+        // Configure the IO Speed 
         temp = GPIOx->OSPEEDR;
         temp &= ~(GPIO_OSPEEDER_OSPEED0 << (position * 2U));
         temp |= (GPIO_Init->Speed << (position * 2U));
         GPIOx->OSPEEDR = temp;
 
-        /* Configure the IO Output Type */
+        // Configure the IO Output Type 
         temp= GPIOx->OTYPER;
         temp &= ~(GPIO_OTYPER_OT_0 << position) ;
         temp |= (((GPIO_Init->Mode & GPIO_OUTPUT_TYPE) >> 4U) << position);
         GPIOx->OTYPER = temp;
       }
 
-      /* Configure IO Direction mode (Input, Output, Alternate or Analog) */
+      // Configure IO Direction mode (Input, Output, Alternate or Analog) 
       temp = GPIOx->MODER;
       temp &= ~(GPIO_MODER_MODE0 << (position * 2U));
       temp |= ((GPIO_Init->Mode & GPIO_MODE) << (position * 2U));
       GPIOx->MODER = temp;
 
-      /* Activate the Pull-up or Pull down resistor for the current IO */
+      // Activate the Pull-up or Pull down resistor for the current IO 
       temp = GPIOx->PUPDR;
       temp &= ~(GPIO_PUPDR_PUPD0 << (position * 2U));
       temp |= ((GPIO_Init->Pull) << (position * 2U)); 
       GPIOx->PUPDR = temp;
 
-      /*--------------------- EXTI Mode Configuration ------------------------*/
-      /* Configure the External Interrupt or event for the current IO */
+      //--------------------- EXTI Mode Configuration ------------------------
+      // Configure the External Interrupt or event for the current IO 
       if((GPIO_Init->Mode & EXTI_MODE) == EXTI_MODE) 
       {
-        /* Enable SYSCFG Clock */
+        // Enable SYSCFG Clock 
         __HAL_RCC_SYSCFG_CLK_ENABLE();
 
         temp = SYSCFG->EXTICR[position >> 2U];
@@ -257,7 +261,7 @@ void HAL_GPIO_Init(GPIO_TypeDef  *GPIOx, GPIO_InitTypeDef *GPIO_Init)
         temp |= ((uint32_t)(GPIO_GET_INDEX(GPIOx)) << (4U * (position & 0x03U)));
         SYSCFG->EXTICR[position >> 2U] = temp;
 
-        /* Clear EXTI line configuration */
+        // Clear EXTI line configuration 
         temp = EXTI->IMR;
         temp &= ~((uint32_t)iocurrent);
         if((GPIO_Init->Mode & GPIO_MODE_IT) == GPIO_MODE_IT)
@@ -274,7 +278,7 @@ void HAL_GPIO_Init(GPIO_TypeDef  *GPIOx, GPIO_InitTypeDef *GPIO_Init)
         }
         EXTI->EMR = temp;
 
-        /* Clear Rising Falling edge configuration */
+        // Clear Rising Falling edge configuration 
         temp = EXTI->RTSR;
         temp &= ~((uint32_t)iocurrent);
         if((GPIO_Init->Mode & RISING_EDGE) == RISING_EDGE)
@@ -293,7 +297,9 @@ void HAL_GPIO_Init(GPIO_TypeDef  *GPIOx, GPIO_InitTypeDef *GPIO_Init)
       }
     }
     position++;
-  }
+  }	
+	
+
 }
 
 /**

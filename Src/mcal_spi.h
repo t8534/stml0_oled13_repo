@@ -59,6 +59,7 @@
 #define SPIx_FORCE_RESET()               __HAL_RCC_SPI1_FORCE_RESET()
 #define SPIx_RELEASE_RESET()             __HAL_RCC_SPI1_RELEASE_RESET()
 
+// Orig
 /* Definition for SPIx Pins */
 #define SPIx_SCK_PIN                     GPIO_PIN_5
 #define SPIx_SCK_GPIO_PORT               GPIOA
@@ -71,6 +72,19 @@
 #define SPIx_MOSI_AF                     GPIO_AF0_SPI1
 
 
+// Check for tests
+/* Definition for SPIx Pins */
+/*
+#define SPIx_SCK_PIN                     GPIO_PIN_5
+#define SPIx_SCK_GPIO_PORT               GPIOA
+#define SPIx_SCK_AF                      GPIO_AF1_SPI1
+#define SPIx_MISO_PIN                    GPIO_PIN_6
+#define SPIx_MISO_GPIO_PORT              GPIOA
+#define SPIx_MISO_AF                     GPIO_AF1_SPI1
+#define SPIx_MOSI_PIN                    GPIO_PIN_7
+#define SPIx_MOSI_GPIO_PORT              GPIOA
+#define SPIx_MOSI_AF                     GPIO_AF1_SPI1
+*/
 
 
 void MCAL_SPI_Init(void);
