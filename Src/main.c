@@ -93,7 +93,34 @@
 //	HAL_Delay(2000);
 //  SH1106_clear(oled_buf);
 //
+// 3.[180102]
+// After replace I/O pins for SPI1
+// from used
+// PA5 - SPI1_SCK   AF0
+// PA6 - SPI1_MISO  AF0
+// PA7 - SPI1_MOSI  AF0
 //
+// to
+// PB3 - SPI1_SCK   AF0
+// PB4 - SPI1_MISO  AF0
+// PB5 - SPI1_MOSI  AF0  - Warning ! this is also SWO debugger
+//
+// LED2 green is flashing, but only if call 
+//
+//   SH1106_begin();
+//   /*
+//   SH1106_clear(oled_buf);
+//   SH1106_bitmap(0, 0, Waveshare12864, 128, 64, oled_buf),;
+//   SH1106_display(oled_buf);
+// 	 HAL_Delay(2000);
+//   SH1106_clear(oled_buf);
+//   */
+//
+// If uncomment the rest, this is not flashing.
+//
+// TODO: Clarify above, and finally also why SPI1 PORT A is not working.
+// It seems to be a problem with PA5 SPI1_SCK pin and alternate functions ?
+
 
 // TODO:
 //
@@ -128,6 +155,9 @@
 //
 // 4.
 // Disable not necessary MCAL modules - stm32l0xx_hal_conf.h
+//
+// 4.5
+// Switch on O3 optimization. Currently I switch it to 0 for debug purposes.
 //
 // 5.
 // Use non blcoking SPI
@@ -430,7 +460,6 @@ int main(void)
 	
   // display an image of bitmap matrix
   SH1106_begin();
-	
 	/*
   SH1106_clear(oled_buf);
   SH1106_bitmap(0, 0, Waveshare12864, 128, 64, oled_buf);

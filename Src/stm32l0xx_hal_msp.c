@@ -90,6 +90,7 @@ void HAL_SPI_MspInit(SPI_HandleTypeDef *hspi)
   GPIO_InitStruct.Speed     = GPIO_SPEED_FREQ_HIGH  ;
   GPIO_InitStruct.Alternate = SPIx_SCK_AF;
   
+	
   HAL_GPIO_Init(SPIx_SCK_GPIO_PORT, &GPIO_InitStruct);  //arek here is problem
     
   // SPI MISO GPIO pin configuration  

@@ -12,24 +12,24 @@
 #define OLED_CS_PIN         GPIO_PIN_2  // PORT C, pin 2
 #define OLED_GPIO_PORT      GPIOC
 
-//todo: replaced for test
-/*
+//todo: this is orig, replaced for test
+
 #define OLED_RST_SET        HAL_GPIO_WritePin(OLED_GPIO_PORT, OLED_RST_PIN, GPIO_PIN_SET)
 #define OLED_RST_RESET      HAL_GPIO_WritePin(OLED_GPIO_PORT, OLED_RST_PIN, GPIO_PIN_RESET)
 #define OLED_DC_SET         HAL_GPIO_WritePin(OLED_GPIO_PORT, OLED_DC_PIN, GPIO_PIN_SET)
 #define OLED_DC_RESET       HAL_GPIO_WritePin(OLED_GPIO_PORT, OLED_DC_PIN, GPIO_PIN_RESET)
 #define OLED_CS_SET         HAL_GPIO_WritePin(OLED_GPIO_PORT, OLED_CS_PIN, GPIO_PIN_SET)
 #define OLED_CS_RESET       HAL_GPIO_WritePin(OLED_GPIO_PORT, OLED_CS_PIN, GPIO_PIN_RESET)
-*/
 
 
+/*
 #define OLED_RST_SET        __nop()
 #define OLED_RST_RESET      __nop()
 #define OLED_DC_SET         __nop()
 #define OLED_DC_RESET       __nop()
 #define OLED_CS_SET         __nop()
 #define OLED_CS_RESET       __nop()
-
+*/
 
 
 

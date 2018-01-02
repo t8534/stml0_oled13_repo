@@ -49,7 +49,7 @@
 // SPI1
 ///////////////////////////////////////////////////////////////////////////////
 
-/* Definition for SPIx clock resources */
+// Definition for SPIx clock resources 
 #define SPIx                             SPI1
 #define SPIx_CLK_ENABLE()                __HAL_RCC_SPI1_CLK_ENABLE()
 #define SPIx_SCK_GPIO_CLK_ENABLE()       __HAL_RCC_GPIOA_CLK_ENABLE()
@@ -60,7 +60,8 @@
 #define SPIx_RELEASE_RESET()             __HAL_RCC_SPI1_RELEASE_RESET()
 
 // Orig
-/* Definition for SPIx Pins */
+// Definition for SPIx Pins, SPI on port A
+/*
 #define SPIx_SCK_PIN                     GPIO_PIN_5
 #define SPIx_SCK_GPIO_PORT               GPIOA
 #define SPIx_SCK_AF                      GPIO_AF0_SPI1
@@ -70,21 +71,21 @@
 #define SPIx_MOSI_PIN                    GPIO_PIN_7
 #define SPIx_MOSI_GPIO_PORT              GPIOA
 #define SPIx_MOSI_AF                     GPIO_AF0_SPI1
-
-
-// Check for tests
-/* Definition for SPIx Pins */
-/*
-#define SPIx_SCK_PIN                     GPIO_PIN_5
-#define SPIx_SCK_GPIO_PORT               GPIOA
-#define SPIx_SCK_AF                      GPIO_AF1_SPI1
-#define SPIx_MISO_PIN                    GPIO_PIN_6
-#define SPIx_MISO_GPIO_PORT              GPIOA
-#define SPIx_MISO_AF                     GPIO_AF1_SPI1
-#define SPIx_MOSI_PIN                    GPIO_PIN_7
-#define SPIx_MOSI_GPIO_PORT              GPIOA
-#define SPIx_MOSI_AF                     GPIO_AF1_SPI1
 */
+
+// Check for tests - seems to be working correctly - 180102
+/* Definition for SPIx Pins, SPI1 on Port B */
+
+#define SPIx_SCK_PIN                     GPIO_PIN_3
+#define SPIx_SCK_GPIO_PORT               GPIOB
+#define SPIx_SCK_AF                      GPIO_AF0_SPI1
+#define SPIx_MISO_PIN                    GPIO_PIN_4
+#define SPIx_MISO_GPIO_PORT              GPIOB
+#define SPIx_MISO_AF                     GPIO_AF0_SPI1
+#define SPIx_MOSI_PIN                    GPIO_PIN_5
+#define SPIx_MOSI_GPIO_PORT              GPIOB
+#define SPIx_MOSI_AF                     GPIO_AF0_SPI1
+
 
 
 void MCAL_SPI_Init(void);
